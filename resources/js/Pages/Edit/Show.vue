@@ -60,6 +60,7 @@ import JetInputError from "@/Jetstream/InputError";
 import JetLabel from "@/Jetstream/Label";
 import JetActionMessage from "@/Jetstream/ActionMessage";
 import JetButton from "@/Jetstream/Button";
+import Content from '../content';
 
 import { quillEditor } from "vue-quill-editor";
 export default {

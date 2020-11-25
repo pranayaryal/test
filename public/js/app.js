@@ -4031,8 +4031,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Jetstream_Label__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Jetstream/Label */ "./resources/js/Jetstream/Label.vue");
 /* harmony import */ var _Jetstream_ActionMessage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/Jetstream/ActionMessage */ "./resources/js/Jetstream/ActionMessage.vue");
 /* harmony import */ var _Jetstream_Button__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/Jetstream/Button */ "./resources/js/Jetstream/Button.vue");
-/* harmony import */ var vue_quill_editor__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vue-quill-editor */ "./node_modules/vue-quill-editor/dist/vue-quill-editor.js");
-/* harmony import */ var vue_quill_editor__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(vue_quill_editor__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _content__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../content */ "./resources/js/Pages/content.js");
+/* harmony import */ var vue_quill_editor__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue-quill-editor */ "./node_modules/vue-quill-editor/dist/vue-quill-editor.js");
+/* harmony import */ var vue_quill_editor__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(vue_quill_editor__WEBPACK_IMPORTED_MODULE_12__);
 //
 //
 //
@@ -4083,6 +4084,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -4097,7 +4099,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    quillEditor: vue_quill_editor__WEBPACK_IMPORTED_MODULE_11__["quillEditor"],
+    quillEditor: vue_quill_editor__WEBPACK_IMPORTED_MODULE_12__["quillEditor"],
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_3__["default"],
     UploadPhoto: _PhotoUpload__WEBPACK_IMPORTED_MODULE_4__["default"],
     JetButton: _Jetstream_Button__WEBPACK_IMPORTED_MODULE_10__["default"],
@@ -106749,8 +106751,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/pranay/Code/functionalTest/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/pranay/Code/functionalTest/resources/css/app.css */"./resources/css/app.css");
+__webpack_require__(/*! /home/saniya/Code/test/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/saniya/Code/test/resources/css/app.css */"./resources/css/app.css");
 
 
 /***/ })
