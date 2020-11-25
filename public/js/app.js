@@ -3961,7 +3961,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -4084,6 +4083,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -4138,7 +4138,7 @@ __webpack_require__.r(__webpack_exports__);
         photo: null,
         content: ''
       }, {
-        bag: "saveImage"
+        bag: "savePost"
       }),
       photo: null
     };
@@ -4354,6 +4354,11 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
     ShowHome: _Home_Show__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      public_image_path: 'public/storage/home/hero-banner.png'
+    };
   },
   props: {
     home_page_html: String,
@@ -89666,13 +89671,6 @@ var render = function() {
         proxy: true
       },
       {
-        key: "description",
-        fn: function() {
-          return [_vm._v("Save Image")]
-        },
-        proxy: true
-      },
-      {
         key: "form",
         fn: function() {
           return [
@@ -89764,7 +89762,7 @@ var render = function() {
                   staticClass:
                     "font-semibold text-xl text-gray-800 leading-tight"
                 },
-                [_vm._v("\n      Testing Quill\n    ")]
+                [_vm._v("\n      Edit\n    ")]
               )
             ]
           },
@@ -89787,13 +89785,6 @@ var render = function() {
                     key: "title",
                     fn: function() {
                       return [_vm._v("Upload Photo For Your Page")]
-                    },
-                    proxy: true
-                  },
-                  {
-                    key: "description",
-                    fn: function() {
-                      return [_vm._v("Save Image")]
                     },
                     proxy: true
                   },
@@ -89854,6 +89845,11 @@ var render = function() {
                     proxy: true
                   }
                 ])
+              }),
+              _vm._v(" "),
+              _c("jet-input-error", {
+                staticClass: "mt-2",
+                attrs: { message: _vm.form.error("content") }
               }),
               _vm._v(" "),
               _c("quill-editor", {
@@ -90003,7 +89999,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "py-12" }, [
         _c("div", { staticClass: "max-w-8xl" }, [
-          _c("img", { attrs: { src: _vm.image_path } })
+          _c("img", { attrs: { src: _vm.public_image_path } })
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "max-w-7xl mx-auto sm:px-6 lg:px-8" }, [

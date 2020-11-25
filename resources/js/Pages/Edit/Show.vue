@@ -2,7 +2,7 @@
   <app-layout>
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Testing Quill
+        Edit
       </h2>
     </template>
     <div class="py-12">
@@ -10,7 +10,6 @@
         <div class="bg-white shadow-xl sm:rounded-lg">
           <jet-form-section @submitted="savePost">
             <template #title>Upload Photo For Your Page</template>
-            <template #description>Save Image</template>
 
             <template #form>
               <div class="col-span-6 sm:col-span-4">
@@ -32,6 +31,8 @@
               </jet-button>
             </template>
           </jet-form-section>
+
+            <jet-input-error :message="form.error('content')" class="mt-2" />
           <quill-editor
             ref="editor"
             v-model="content"
@@ -104,7 +105,7 @@ export default {
           content: '',
         },
         {
-          bag: "saveImage",
+          bag: "savePost",
         }
       ),
       photo: null,

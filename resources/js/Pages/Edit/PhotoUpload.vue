@@ -1,7 +1,6 @@
 <template>
   <jet-form-section @submitted="saveImage">
     <template #title>Upload Photo For Your Page</template>
-    <template #description>Save Image</template>
 
     <template #form>
       <div class="col-span-6 sm:col-span-4">
