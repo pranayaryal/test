@@ -20,43 +20,11 @@ use App\Http\Controllers\ImageController;
 //     return view('welcome');
 // });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
-    return Inertia\Inertia::render('Home', [
-        'home_page_html' => Page::where('name', 'home')->first()->html,
-        'image_path' => '../img/front.jpg'
-    ]);
-})->name('home');
+Route::middleware(['auth:sanctum', 'verified'])->get('/', '\App\Http\Controllers\PostController@getHomePage')->name('home');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/contact', function () {
-    return Inertia\Inertia::render('Contact/Show', [
-        'image_path' => '../img/contact.jpg'
-    ]);
-})->name('contact');
+Route::middleware(['auth:sanctum', 'verified'])->get('/contact', '\App\Http\Controllers\PostController@getContactPage')->name('contact');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/edit', function () {
-    return Inertia\Inertia::render('Edit/Show', [
-        'page' => Page::where('name', 'home')->first()->html,
-    ]);
-})->name('edit');
-
-Route::get('/testingPage', function(){
-    $page = Page::all()->first();
-    dd($page);
-});
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/quill', function () {
-    return Inertia\Inertia::render('Edit/TestingQuill', [
-        'page' => Page::where('name', 'home')->first()->html,
-    ]);
-})->name('quill');
-
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/check', function () {
-    $page = Page::where('name', 'home')->first()->html;
-    dd($page);
-
-})->name('check');
-
+Route::middleware(['auth:sanctum', 'verified'])->get('/edit', '\App\Http\Controllers\PostController@edit')->name('edit');
 
 Route::middleware(['auth:sanctum', 'verified'])->post('/save', '\App\Http\Controllers\PostController@save')->name('save');
 

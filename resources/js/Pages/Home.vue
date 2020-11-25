@@ -8,7 +8,7 @@
 
         <div class="py-12">
             <div class="max-w-8xl">
-                <img :src="image_path"/>
+                <img :src="public_image_path"/>
             </div>
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
@@ -27,6 +27,13 @@
         components: {
             AppLayout,
             ShowHome,
+        },
+
+        data(){
+            return {
+                public_image_path: '/storage/home/hero-banner.png'
+            }
+
         },
 
         props: {
