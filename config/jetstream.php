@@ -29,8 +29,8 @@ return [
     */
 
     'features' => [
-        Features::profilePhotos(),
-        Features::api(),
+        // Features::profilePhotos(),
+        // Features::api(),
         //4xMULMzZL81yggn9H1OQvZ1jOigAGknbg24SIIZI
 
         // Features::teams(),
