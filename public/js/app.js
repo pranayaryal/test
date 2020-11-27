@@ -4355,7 +4355,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      public_image_path: 'public/storage/home/hero-banner.png'
+      public_image_path: '/storage/home/hero-banner.png'
     };
   },
   props: {
@@ -91152,7 +91152,7 @@ var render = function() {
                         _c("img", {
                           staticClass: "rounded-full h-20 w-20 object-cover",
                           attrs: {
-                            src: _vm.user.profile_photo_url,
+                            src: _vm.user.profile_photo_path,
                             alt: "Current Profile Photo"
                           }
                         })
