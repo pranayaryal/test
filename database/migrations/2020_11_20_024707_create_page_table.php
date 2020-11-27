@@ -16,9 +16,11 @@ class CreatePageTable extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
             $table->text('name');
-            $table->text('html');
+            $table->text('html')->nullable();
             $table->string('image_path');
             $table->string('image_name');
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->timestamps();
         });
     }

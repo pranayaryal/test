@@ -20,8 +20,11 @@
                             <jet-nav-link :href="route('contact')" :active="route().current('contact')">
                                Contact
                             </jet-nav-link>
-                            <jet-nav-link :href="route('edit')" :active="route().current('edit')">
-                               Edit
+                            <jet-nav-link :href="route('editHome')" :active="route().current('editHome')">
+                               Edit (Home)
+                            </jet-nav-link>
+                            <jet-nav-link :href="route('editContact')" :active="route().current('editContact')">
+                               Edit (Contact)
                             </jet-nav-link>
                         </div>
                     </div>
@@ -236,6 +239,11 @@
             return {
                 showingNavigationDropdown: false,
             }
+        },
+        mounted(){
+          console.log('the componenet applayout is mounted');
+          console.log(this.user);
+          
         },
 
         methods: {

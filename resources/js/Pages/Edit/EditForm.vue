@@ -1,4 +1,3 @@
-
 <template>
     <jet-form-section @submitted="updateProfileInformation">
         <template #title>

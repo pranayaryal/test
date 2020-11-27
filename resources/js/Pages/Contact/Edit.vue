@@ -6,18 +6,20 @@
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white shadow-xl sm:rounded-lg">
-          <jet-form-section @submitted="savePost">
+          <jet-form-section @submitted="saveContactDetails">
 
             <template #form>
               <div class="col-span-6 sm:col-span-4">
-                <jet-label for="photo" value="Upload Image For Home Page" />
+                <jet-label for="photo" value="Upload Image For Contact Page" />
                 <input
                   type="file"
                   class="hidden"
                   ref="photo"
                   @change="updatePhotoPreview"
                 />
-                <jet-input-error v-if="!photoPreview" :message="form.error('photo')" class="mt-2" />
+                <jet-input-error :message="form.error('photo')" class="mt-2" />
+                <jet-input-error v-if="photoDeleted"
+                :message="photoDeleted ? 'photo deleted, refresh page' : ''" class="mt-2" />
                 <!-- Current page Photo -->
                 <div class="mt-2" v-show="!photoPreview">
                   <img
@@ -55,6 +57,31 @@
                   Remove Photo
                 </jet-secondary-button>
               </div>
+
+              <!-- Phone -->
+              <div class="col-span-6 sm:col-span-4">
+                <jet-label for="phone" value="Phone" />
+                <jet-input
+                  id="phone"
+                  type="text"
+                  class="mt-1 block w-full"
+                  v-model="form.phone"
+                  autocomplete="phone"
+                />
+                <jet-input-error :message="form.error('phone')" class="mt-2" />
+              </div>
+
+              <!-- Email -->
+              <div class="col-span-6 sm:col-span-4">
+                <jet-label for="email" value="Email" />
+                <jet-input
+                  id="email"
+                  type="email"
+                  class="mt-1 block w-full"
+                  v-model="form.email"
+                />
+                <jet-input-error :message="form.error('email')" class="mt-2" />
+              </div>
             </template>
             <template #actions>
               <jet-action-message :on="form.recentlySuccessful" class="mr-3">
@@ -65,24 +92,11 @@
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
               >
-                Save post
+                Save Contact Details
               </jet-button>
             </template>
           </jet-form-section>
 
-          <jet-button @click.native.prevent="deletePost" v-if="pageHtml">
-            Delete post
-            </jet-button>
-          <jet-input-error :message="form.error('content')" class="mt-2 ml-4" />
-          <quill-editor
-            ref="editor"
-            v-model="content"
-            :options="editorOption"
-            @blur="onEditorBlue($event)"
-            @focus="onEditorFocus($event)"
-            @ready="onEditorReady($event)"
-            class="mt-4"
-          />
         </div>
       </div>
     </div>
@@ -90,11 +104,8 @@
 </template>
 
 <script>
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import "quill/dist/quill.bubble.css";
 import AppLayout from "@/Layouts/AppLayout";
-import UploadPhoto from "./PhotoUpload";
+import UploadPhoto from "../Edit/PhotoUpload";
 import JetFormSection from "@/Jetstream/FormSection";
 import JetInput from "@/Jetstream/Input";
 import JetInputError from "@/Jetstream/InputError";
@@ -104,10 +115,8 @@ import JetButton from "@/Jetstream/Button";
 import Content from "../content";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton";
 
-import { quillEditor } from "vue-quill-editor";
 export default {
   components: {
-    quillEditor,
     AppLayout,
     UploadPhoto,
     JetButton,
@@ -119,7 +128,7 @@ export default {
     JetSecondaryButton,
   },
 
-  props: ["pageHtml", "pagePhotoPath"],
+  props: ["pagePhotoPath", "email", "phone", "photoDeleted"],
 
   mounted: () => {
     console.log("show.vue was mounted");
@@ -129,26 +138,15 @@ export default {
     return {
       content: this.pageHtml ? this.pageHtml : "",
       publicImagePath: `/storage/${this.pagePhotoPath}`,
-      editorOption: {
-        theme: "snow",
-        modules: {
-          toolbar: [
-            ["bold", "italic", "underline", "strike", "h1"],
-            ["blockquote", "code-block"],
-            [{ header: 1 }, { header: 2 }],
-            [{ indent: "-1" }, { indent: "+1" }],
-            [{ list: "ordered" }, { list: "bullet" }],
-          ],
-        },
-      },
 
       form: this.$inertia.form(
         {
           photo: null,
-          content: "",
+          email: this.email,
+          phone: this.phone,
         },
         {
-          bag: "savePost",
+          bag: "saveContactDetails",
         }
       ),
       photo: null,
@@ -157,16 +155,6 @@ export default {
   },
 
   methods: {
-    onEditorBlue(editor) {
-      console.log("editor blur", editor);
-    },
-    onEditorFocus(editor) {
-      console.log("editor focussed", editor);
-    },
-    onEditorReady(editor) {
-      console.log("editor ready", editor);
-    },
-
     selectNewPhoto() {
       this.$refs.photo.click();
     },
@@ -181,15 +169,13 @@ export default {
       reader.readAsDataURL(this.$refs.photo.files[0]);
     },
 
-    savePost: function () {
+    saveContactDetails: function () {
       if (this.$refs.photo) {
         this.form.photo = this.$refs.photo.files[0];
       }
 
-      this.form.content = this.content;
-
       this.form
-        .post(route("saveHome"), {
+        .post(route("saveContact"), {
           preserveScroll: true,
         })
         .then((res) => {
@@ -198,22 +184,23 @@ export default {
     },
     deletePhoto() {
       this.$inertia
-        .post(route("homePhotoDelete"), {
+        .post(route("contactPhotoDelete"), {
           preserveScroll: true,
         })
         .then(() => {
           this.photoPreview = null;
         });
     },
-    deletePost(){
+    deletePost() {
       this.$inertia
-        .post(route('deletePost'), {
+        .post(route("deletePost"), {
           preserveScroll: true,
         })
         .then(() => {
           this.photoPreview = null;
+          window.location('/edit-contact')
         });
-    }
+    },
   },
 };
 </script>
