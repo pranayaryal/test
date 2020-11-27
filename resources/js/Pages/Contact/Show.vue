@@ -5,10 +5,10 @@
       </template>
       <div>
         <div class="w-full">
-            <img :src="image_path" class="h-50 w-full object-scale-down"/>
+            <img :src="publicImagePath" class="h-50 w-full object-scale-down"/>
         </div>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-            <contact-form :user="$page.user" />
+            <contact-form :user="$page.user" :email="email" :phone="phone" />
 
             <jet-section-border />
 
@@ -48,8 +48,16 @@ export default {
   },
 
   props: {
-      image_path: String
+      image_path: String,
+      email: String,
+      phone: String
   },
+
+  data(){
+    return {
+        publicImagePath: `/storage/${this.image_path}`
+    }
+  }
 
 
 };
