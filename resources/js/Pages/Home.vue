@@ -6,7 +6,7 @@
             </h2>
         </template>
 
-        <div class="py-12">
+        <!-- <div class="py-12"> -->
             <div class="w-full">
                 <img :src="publicImagePath"/>
             </div>
@@ -16,7 +16,7 @@
                     <show-home :page="home_page_html"/>
                 </div>
             </div>
-        </div>
+        <!-- </div> -->
     </app-layout>
 </template>
 
