@@ -1,12 +1,6 @@
 <template>
     <app-layout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Home
-            </h2>
-        </template>
-
-        <div class="py-12">
+        <!-- <div class="py-12"> -->
             <div class="w-full">
                 <img :src="publicImagePath"/>
             </div>
@@ -16,7 +10,7 @@
                     <show-home :page="home_page_html"/>
                 </div>
             </div>
-        </div>
+        <!-- </div> -->
     </app-layout>
 </template>
 
