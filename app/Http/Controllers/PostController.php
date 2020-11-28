@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use App\Models\Page;
 
 class PostController extends Controller
@@ -14,7 +15,8 @@ class PostController extends Controller
   {
     $request->validateWithBag('savePost', [
       'content' => 'required|string',
-      'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+      'photo' => Rule::requiredIf(Page::where('name', 'contact')->first()->image_path != null),
+      'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ]);
 
     if (Page::where('name', 'home')->first() != null) {
@@ -29,10 +31,12 @@ class PostController extends Controller
 
   public function saveDetails(Request $request, Page $page)
   {
-    $photo_name = $request->photo->getClientOriginalName();
-    $path = $request->file('photo')->storeAs('public/home', $photo_name);
-    $page->image_path = substr($path, 7);
-    $page->image_name = $photo_name;
+    if ($request->has('photo')) {
+      $photo_name = $request->photo->getClientOriginalName();
+      $path = $request->file('photo')->storeAs('public/home', $photo_name);
+      $page->image_path = substr($path, 7);
+      $page->image_name = $photo_name;
+    }
     $page->html = $request->content;
     $page->save();
   }

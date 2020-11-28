@@ -81,10 +81,12 @@ class ContactController extends Controller
 
   public function saveDetails(Request $request, Page $page)
   {
-    $photo_name = $request->photo->getClientOriginalName();
-    $path = $request->file('photo')->storeAs('public/contact', $photo_name);
-    $page->image_path = substr($path, 7);
-    $page->image_name = $photo_name;
+    if ($request->has('photo')) {
+      $photo_name = $request->photo->getClientOriginalName();
+      $path = $request->file('photo')->storeAs('public/contact', $photo_name);
+      $page->image_path = substr($path, 7);
+      $page->image_name = $photo_name;
+    }
     $page->email = $request->email;
     $page->phone = $request->phone;
     $page->save();
@@ -101,7 +103,6 @@ class ContactController extends Controller
     $page->save();
 
     return Redirect::route('editContact');
-
   }
 
   public function postContact(Request $request)
@@ -118,6 +119,5 @@ class ContactController extends Controller
     Mail::to($emailToSendTo)->send(new ContactSent($request));
 
     return Redirect::route('contact');
-
   }
 }
