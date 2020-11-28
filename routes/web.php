@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\Page;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ContactController;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,4 +36,5 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/delete-home-photo', [Pos
 Route::middleware(['auth:sanctum', 'verified'])->post('/delete-contact-photo', [ContactController::class, 'deletePhoto'])->name('contactPhotoDelete');
 Route::middleware(['auth:sanctum', 'verified'])->post('/delete-post', '\App\Http\Controllers\PostController@deletePost')->name('deletePost');
 Route::middleware(['auth:sanctum', 'verified'])->post('/contact', [ContactController::class, 'postContact'])->name('contact.post');
+
 
