@@ -50,17 +50,12 @@ class ContactController extends Controller
   public function save(Request $request)
   {
     $request->validateWithBag('saveContactDetails', [
-      // 'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
       'photo' => Rule::requiredIf(Page::where('name', 'contact')->first()->image_path != null),
       'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
       'email' => 'required|email:rfc,dns',
       'phone' => 'required|string',
 
     ]);
-
-    // Validator::make($request->all(), [
-    //   'photo' => Rule::requiredIf(Page::where('name', 'contact')->first()->image_path != null)
-    // ]);
 
     if (Page::where('name', 'contact')->first() != null) {
       return $this->saveToExisting($request);
@@ -69,14 +64,14 @@ class ContactController extends Controller
     $page = new Page();
     $page->name = 'contact';
     $this->saveDetails($request, $page);
-    return Redirect::route('home');
+    return Redirect::route('contact');
   }
 
   public function saveToExisting(Request $request)
   {
     $page = Page::where('name', 'contact')->first();
     $this->saveDetails($request, $page);
-    return Redirect::route('home');
+    return Redirect::route('contact');
   }
 
   public function saveDetails(Request $request, Page $page)
