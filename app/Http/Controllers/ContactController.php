@@ -8,7 +8,9 @@ use App\Models\Page;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
-use Mailgun\Mailgun;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
+
 
 class ContactController extends Controller
 {
@@ -48,11 +50,17 @@ class ContactController extends Controller
   public function save(Request $request)
   {
     $request->validateWithBag('saveContactDetails', [
-      'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+      // 'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+      'photo' => Rule::requiredIf(Page::where('name', 'contact')->first()->image_path != null),
+      'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
       'email' => 'required|email:rfc,dns',
       'phone' => 'required|string',
 
     ]);
+
+    // Validator::make($request->all(), [
+    //   'photo' => Rule::requiredIf(Page::where('name', 'contact')->first()->image_path != null)
+    // ]);
 
     if (Page::where('name', 'contact')->first() != null) {
       return $this->saveToExisting($request);
@@ -104,6 +112,7 @@ class ContactController extends Controller
       'help' => 'required|string'
 
     ]);
+
     $emailToSendTo = Page::where('name', 'contact')->first()->email;
 
     Mail::to($emailToSendTo)->send(new ContactSent($request));
