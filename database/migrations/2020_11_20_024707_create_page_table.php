@@ -21,6 +21,8 @@ class CreatePageTable extends Migration
             $table->string('image_name');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
+            $table->string('title');
+            $table->string('description');
             $table->timestamps();
         });
     }
