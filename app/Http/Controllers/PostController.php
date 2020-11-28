@@ -11,15 +11,20 @@ use App\Models\Page;
 
 class PostController extends Controller
 {
+  public function __construct()
+  {
+    $this->homePage = Page::where('name', 'home')->first();
+  }
   public function save(Request $request)
   {
     $request->validateWithBag('savePost', [
       'content' => 'required|string',
-      'photo' => Rule::requiredIf(Page::where('name', 'contact')->first()->image_path != null),
-      'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+      'photo' => [Rule::requiredIf($this->homePage == null), 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+      'title' => 'required|string',
+      'description' => 'required|string',
     ]);
 
-    if (Page::where('name', 'home')->first() != null) {
+    if ($this->homePage != null) {
       return $this->saveToExisting($request);
     }
 
@@ -38,46 +43,52 @@ class PostController extends Controller
       $page->image_name = $photo_name;
     }
     $page->html = $request->content;
+    $page->title = $request->title;
+    $page->description = $request->description;
     $page->save();
   }
 
   public function saveToExisting(Request $request)
   {
-    $page = Page::where('name', 'home')->first();
+    $page = $this->homePage;
     $this->saveDetails($request, $page);
     return Redirect::route('home');
   }
 
-  public function getHomePage()
+  public function show()
   {
-    if (Page::where('name', 'home')->first() != null) {
+    if ($this->homePage != null) {
       return \Inertia\Inertia::render('Home', [
-        'home_page_html' => Page::where('name', 'home')->first()->html,
-        'image_path' =>  Page::where('name', 'home')->first()->image_path,
-      ]);
+        'home_page_html' => $this->homePage->html,
+        'image_path' =>  $this->homePage->image_path,
+      ])->withViewData(['meta' => $this->homePage->description, 'title' => $this->homePage->title ]);
     }
     return \Inertia\Inertia::render('Home');
   }
 
   public function edit()
   {
-    if (Page::where('name', 'home')->first() != null) {
+    if ($this->homePage != null) {
       return \Inertia\Inertia::render('Edit/Show', [
-        'pageHtml' => Page::where('name', 'home')->first()->html,
-        'pagePhotoPath' => Page::where('name', 'home')->first()->image_path,
-        'name' => 'home'
+        'pageHtml' => $this->homePage->html,
+        'pagePhotoPath' => $this->homePage->image_path,
+        'name' => 'home',
+        'title' => $this->homePage->title,
+        'description' => $this->homePage->description
       ]);
     }
     return \Inertia\Inertia::render('Edit/Show', [
       'page' => '',
       'pagePhotoPath' => '',
-      'name' => 'home'
+      'name' => 'home',
+      'title' => '',
+      'description' => ''
     ]);
   }
 
   public function deletePhoto(Request $request)
   {
-    $page = Page::where('name', 'home')->first();
+    $page = $this->homePage;
     $photo_path = $page->image_path;
     Storage::delete($photo_path);
     $page->image_path = '';
@@ -88,7 +99,7 @@ class PostController extends Controller
 
   public function deletePost(Request $request)
   {
-    $page = Page::where('name', 'home')->first();
+    $page = $this->homePage;
     $page->delete();
 
     return \Inertia\Inertia::render('Home');

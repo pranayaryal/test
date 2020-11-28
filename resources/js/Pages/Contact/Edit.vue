@@ -82,6 +82,30 @@
                 />
                 <jet-input-error :message="form.error('email')" class="mt-2" />
               </div>
+
+              <!-- Title -->
+              <div class="col-span-6 sm:col-span-4">
+                <jet-label for="title" value="Meta Title" />
+                <jet-input
+                  id="title"
+                  type="title"
+                  class="mt-1 block w-full"
+                  v-model="form.title"
+                />
+                <jet-input-error :message="form.error('title')" class="mt-2" />
+              </div>
+              <!-- Description -->
+              <div class="col-span-6 sm:col-span-4">
+                <jet-label for="description" value="Meta Description" />
+                <jet-input
+                  id="description"
+                  type="description"
+                  class="mt-1 block w-full"
+                  v-model="form.description"
+                />
+                <jet-input-error :message="form.error('description')" class="mt-2" />
+              </div>
+
             </template>
             <template #actions>
               <jet-action-message :on="form.recentlySuccessful" class="mr-3">
@@ -128,7 +152,7 @@ export default {
     JetSecondaryButton,
   },
 
-  props: ["pagePhotoPath", "email", "phone", "photoDeleted"],
+  props: ["pagePhotoPath", "email", "phone", "photoDeleted", "title", "description"],
 
   mounted: () => {
     console.log("show.vue was mounted");
@@ -144,6 +168,8 @@ export default {
           photo: null,
           email: this.email,
           phone: this.phone,
+          title: this.title,
+          description: this.description
         },
         {
           bag: "saveContactDetails",

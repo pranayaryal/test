@@ -14,14 +14,22 @@ use Illuminate\Support\Facades\Validator;
 
 class ContactController extends Controller
 {
+  public function __construct()
+  {
+    $this->contactPage = Page::where('name', 'contact')->first();
+  }
+
+
   public function show()
   {
-    if (Page::where('name', 'contact')->first() != null) {
+    if ($this->contactPage != null) {
       return \Inertia\Inertia::render('Contact/Show', [
-        'email' =>  Page::where('name', 'contact')->first()->email,
-        'phone' =>  Page::where('name', 'contact')->first()->phone,
-        'image_path' =>  Page::where('name', 'contact')->first()->image_path,
-      ]);
+        'email' =>  $this->contactPage->email,
+        'phone' =>  $this->contactPage->phone,
+        'image_path' =>  $this->contactPage->image_path,
+        'title' =>  $this->contactPage->title,
+        'description' =>  $this->contactPage->description,
+      ])->withViewData(['meta' => $this->contactPage->description, 'title' => $this->contactPage->title ]);
     }
 
     return \Inertia\Inertia::render('Contact/Show', [
@@ -33,31 +41,40 @@ class ContactController extends Controller
 
   public function edit()
   {
-    if (Page::where('name', 'contact')->first() != null) {
+    if ($this->contactPage != null) {
       return \Inertia\Inertia::render('Contact/Edit', [
-        'email' => Page::where('name', 'contact')->first()->email,
-        'pagePhotoPath' => Page::where('name', 'contact')->first()->image_path,
-        'phone' => Page::where('name', 'contact')->first()->phone
-      ]);
+        'email' => $this->contactPage->email,
+        'pagePhotoPath' => $this->contactPage->image_path,
+        'phone' => $this->contactPage->phone,
+        'title' => $this->contactPage->title,
+        'description' => $this->contactPage->description,
+      ])->withViewData(['meta' => $this->contactPage->description, 'title' => $this->contactPage->title ]);
     }
     return \Inertia\Inertia::render('Contact/Edit', [
-      'email' => 'john@email.com',
+      'email' => '',
       'pagePhotoPath' => '',
-      'phone' => '2879283792387'
+      'phone' => '',
+      'title' => '',
+      'description' => ''
     ]);
   }
 
   public function save(Request $request)
   {
     $request->validateWithBag('saveContactDetails', [
-      'photo' => Rule::requiredIf(Page::where('name', 'contact')->first()->image_path != null),
-      'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+      'photo' => [Rule::requiredIf($this->contactPage == null), 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
       'email' => 'required|email:rfc,dns',
       'phone' => 'required|string',
+      'title' => 'required|string',
+      'description' => 'required|string',
 
     ]);
 
-    if (Page::where('name', 'contact')->first() != null) {
+    // Validator::make($request->all(), [
+
+    // ])->validateWithBag('saveContactDetails');
+
+    if ($this->contactPage != null) {
       return $this->saveToExisting($request);
     }
 
@@ -69,8 +86,7 @@ class ContactController extends Controller
 
   public function saveToExisting(Request $request)
   {
-    $page = Page::where('name', 'contact')->first();
-    $this->saveDetails($request, $page);
+    $this->saveDetails($request, $this->contactPage);
     return Redirect::route('contact');
   }
 
@@ -84,18 +100,18 @@ class ContactController extends Controller
     }
     $page->email = $request->email;
     $page->phone = $request->phone;
+    $page->title = $request->title;
+    $page->description = $request->description;
     $page->save();
   }
 
   public function deletePhoto()
   {
-
-    $page = Page::where('name', 'contact')->first();
-    $photo_path = $page->image_path;
+    $photo_path = $this->contactPage->image_path;
     Storage::delete($photo_path);
-    $page->image_path = '';
-    $page->image_name = '';
-    $page->save();
+    $this->contactPage->image_path = '';
+    $this->contactPage->image_name = '';
+    $this->contactPage->save();
 
     return Redirect::route('editContact');
   }
@@ -109,7 +125,7 @@ class ContactController extends Controller
 
     ]);
 
-    $emailToSendTo = Page::where('name', 'contact')->first()->email;
+    $emailToSendTo = $this->contactPage->email;
 
     Mail::to($emailToSendTo)->send(new ContactSent($request));
 

@@ -50,7 +50,9 @@ export default {
   props: {
       image_path: String,
       email: String,
-      phone: String
+      phone: String,
+      title: String,
+      description: String
   },
 
   data(){
