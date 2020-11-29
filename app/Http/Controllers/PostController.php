@@ -59,9 +59,9 @@ class PostController extends Controller
   {
     if ($this->homePage != null) {
       return \Inertia\Inertia::render('Home', [
-        'home_page_html' => $this->homePage->html,
-        'image_path' =>  $this->homePage->image_path,
-      ])->withViewData(['meta' => $this->homePage->description, 'title' => $this->homePage->title ]);
+        'home_page_html' => Page::where('name', 'home')->first()->html,
+        'image_path' =>  Page::where('name', 'home')->first()->image_path,
+      ])->withViewData(['testingGA' => 'UA-testingGA']);
     }
     return \Inertia\Inertia::render('Home');
   }

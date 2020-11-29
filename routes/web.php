@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\Page;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ContactController;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
