@@ -33,3 +33,7 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/save-contact', [ContactC
 Route::middleware(['auth:sanctum', 'verified'])->post('/delete-contact-photo', [ContactController::class, 'deletePhoto'])->name('contactPhotoDelete');
 Route::middleware(['auth:sanctum', 'verified'])->post('/contact', [ContactController::class, 'postContact'])->name('contact.post');
 
+Route::middleware(['auth:sanctum', 'verified'])->post('/analytics', [AnalyticsController::class, 'save'])->name('analytics.post');
+Route::middleware(['auth:sanctum', 'verified'])->get('/analytics', [AnalyticsController::class, 'edit'])->name('analytics.get');
+
+
