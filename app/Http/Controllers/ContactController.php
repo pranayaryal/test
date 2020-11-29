@@ -29,7 +29,11 @@ class ContactController extends Controller
         'image_path' =>  $this->contactPage->image_path,
         'title' =>  $this->contactPage->title,
         'description' =>  $this->contactPage->description,
-      ])->withViewData(['meta' => $this->contactPage->description, 'title' => $this->contactPage->title ]);
+      ])->withViewData(
+        ['meta' => $this->contactPage->description, 
+        'title' => $this->contactPage->title,
+        'ga' => $this->getAnalytics()['ga'],
+        'fbPixelId' => $this->getAnalytics()['fbPixelId']]);
     }
 
     return \Inertia\Inertia::render('Contact/Show', [

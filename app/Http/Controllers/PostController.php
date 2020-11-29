@@ -61,7 +61,8 @@ class PostController extends Controller
       return \Inertia\Inertia::render('Home', [
         'home_page_html' => Page::where('name', 'home')->first()->html,
         'image_path' =>  Page::where('name', 'home')->first()->image_path,
-      ])->withViewData(['testingGA' => 'UA-testingGA']);
+      ])->withViewData(['ga' => $this->getAnalytics()['ga'], 
+              'fbPixelId' => $this->getAnalytics()['fbPixelId']]);
     }
     return \Inertia\Inertia::render('Home');
   }

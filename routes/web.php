@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\Page;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\AnalyticsController;
 use Inertia\Inertia;
 
 /*
@@ -36,5 +37,3 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/contact', [ContactContro
 
 Route::middleware(['auth:sanctum', 'verified'])->post('/analytics', [AnalyticsController::class, 'save'])->name('analytics.post');
 Route::middleware(['auth:sanctum', 'verified'])->get('/analytics', [AnalyticsController::class, 'edit'])->name('analytics.get');
-
-

@@ -26,6 +26,10 @@
                             <jet-nav-link :href="route('editContact')" :active="route().current('editContact')">
                                Edit (Contact)
                             </jet-nav-link>
+                            <jet-nav-link :href="route('analytics.get')" :active="route().current('analytics.get')">
+                              Analytics 
+                            </jet-nav-link>
+                            
                         </div>
                     </div>
 
