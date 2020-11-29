@@ -29,6 +29,7 @@ class ContactController extends Controller
         'image_path' =>  $this->contactPage->image_path,
         'title' =>  $this->contactPage->title,
         'description' =>  $this->contactPage->description,
+        'noindex' =>  $this->contactPage->noindex,
       ])->withViewData(
         ['meta' => $this->contactPage->description, 
         'title' => $this->contactPage->title,
@@ -52,6 +53,7 @@ class ContactController extends Controller
         'phone' => $this->contactPage->phone,
         'title' => $this->contactPage->title,
         'description' => $this->contactPage->description,
+        'noindex' => $this->contactPage->noindex,
       ])->withViewData(['meta' => $this->contactPage->description, 'title' => $this->contactPage->title ]);
     }
     return \Inertia\Inertia::render('Contact/Edit', [
@@ -71,6 +73,7 @@ class ContactController extends Controller
       'phone' => 'required|string',
       'title' => 'required|string',
       'description' => 'required|string',
+      'noindex' => 'required|boolean'
 
     ]);
 
@@ -106,6 +109,7 @@ class ContactController extends Controller
     $page->phone = $request->phone;
     $page->title = $request->title;
     $page->description = $request->description;
+    $page->noindex = $request->noindex;
     $page->save();
   }
 

@@ -29,6 +29,7 @@
     "dependencies": {
         "tiptap": "^1.30.0",
         "tiptap-extensions": "^1.33.2",
+        "vue-meta": "^2.4.0",
         "vue-quill-editor": "^3.0.6"
     }
 }

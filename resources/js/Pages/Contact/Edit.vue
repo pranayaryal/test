@@ -7,7 +7,6 @@
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white shadow-xl sm:rounded-lg">
           <jet-form-section @submitted="saveContactDetails">
-
             <template #form>
               <div class="col-span-6 sm:col-span-4">
                 <jet-label for="photo" value="Upload Image For Contact Page" />
@@ -18,8 +17,11 @@
                   @change="updatePhotoPreview"
                 />
                 <jet-input-error :message="form.error('photo')" class="mt-2" />
-                <jet-input-error v-if="photoDeleted"
-                :message="photoDeleted ? 'photo deleted, refresh page' : ''" class="mt-2" />
+                <jet-input-error
+                  v-if="photoDeleted"
+                  :message="photoDeleted ? 'photo deleted, refresh page' : ''"
+                  class="mt-2"
+                />
                 <!-- Current page Photo -->
                 <div class="mt-2" v-show="!photoPreview">
                   <img
@@ -103,9 +105,16 @@
                   class="mt-1 block w-full"
                   v-model="form.description"
                 />
-                <jet-input-error :message="form.error('description')" class="mt-2" />
+                <jet-input-error
+                  :message="form.error('description')"
+                  class="mt-2"
+                />
               </div>
 
+              <div class="col-span-6 sm:col-span-4">
+                <input type="checkbox" checked="noindex" id="noindex" v-model="form.noindex" />
+                <label for="index">Noindex: {{ form.noindex }}</label>
+              </div>
             </template>
             <template #actions>
               <jet-action-message :on="form.recentlySuccessful" class="mr-3">
@@ -120,7 +129,6 @@
               </jet-button>
             </template>
           </jet-form-section>
-
         </div>
       </div>
     </div>
@@ -152,7 +160,15 @@ export default {
     JetSecondaryButton,
   },
 
-  props: ["pagePhotoPath", "email", "phone", "photoDeleted", "title", "description"],
+  props: [
+    "pagePhotoPath",
+    "email",
+    "phone",
+    "photoDeleted",
+    "title",
+    "description",
+    "noindex"
+  ],
 
   mounted: () => {
     console.log("show.vue was mounted");
@@ -169,7 +185,8 @@ export default {
           email: this.email,
           phone: this.phone,
           title: this.title,
-          description: this.description
+          description: this.description,
+          noindex: this.noindex
         },
         {
           bag: "saveContactDetails",
@@ -224,7 +241,7 @@ export default {
         })
         .then(() => {
           this.photoPreview = null;
-          window.location('/edit-contact')
+          window.location("/edit-contact");
         });
     },
   },

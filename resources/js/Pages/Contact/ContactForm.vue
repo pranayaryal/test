@@ -80,7 +80,15 @@ export default {
     JetTextInput,
   },
 
-  props: ["user", "email", "phone"],
+  metaInfo: {
+    meta: [{ 
+      name: 'robots',
+      content: this.noindex ? 'noindex' : ''
+    }],
+  },
+
+
+  props: ["user", "email", "phone", "noindex"],
 
   data() {
     return {
@@ -97,7 +105,7 @@ export default {
       ),
 
       photoPreview: null,
-      successMessage: null
+      successMessage: null,
     };
   },
 
@@ -111,10 +119,9 @@ export default {
         })
         .then((res) => {
           this.form.name = "";
-          this.form.email= "";
+          this.form.email = "";
           this.form.help = "";
           console.log(res.data);
-
         });
     },
   },

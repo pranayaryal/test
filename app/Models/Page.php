@@ -23,4 +23,8 @@ class Page extends Model
         'structure',
         'reference',
     ];
+
+    protected $casts = [
+      'noindex' => 'boolean'
+    ];
 }

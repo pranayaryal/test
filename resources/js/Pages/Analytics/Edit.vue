@@ -66,6 +66,12 @@ import JetSecondaryButton from "@/Jetstream/SecondaryButton";
 import JetButton from "@/Jetstream/Button";
 
 export default {
+  metaInfo: {
+    title: 'Analytics Edit',
+    meta: [
+      { name: 'robots', content: 'noindex'}
+    ]
+  },
   components: {
     AppLayout,
     JetActionMessage,

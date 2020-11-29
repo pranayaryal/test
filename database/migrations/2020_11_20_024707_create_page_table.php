@@ -23,6 +23,7 @@ class CreatePageTable extends Migration
             $table->string('phone')->nullable();
             $table->string('title');
             $table->string('description');
+            $table->boolean('noindex');
             $table->timestamps();
         });
     }

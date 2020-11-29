@@ -8,7 +8,8 @@
             <img :src="publicImagePath" class="h-50 w-full object-scale-down"/>
         </div>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-            <contact-form :user="$page.user" :email="email" :phone="phone" />
+            <contact-form :user="$page.user" :email="email" :phone="phone"
+              :noindex="noindex" />
 
             <jet-section-border />
 
@@ -52,7 +53,8 @@ export default {
       email: String,
       phone: String,
       title: String,
-      description: String
+      description: String,
+      noindex: Boolean
   },
 
   data(){

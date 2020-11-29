@@ -2,14 +2,14 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="robots" content="noindex">
+    {{-- <meta name="robots" content="noindex"> --}}
+    <meta name="description" content="{{ isset($meta) ? $meta : 'great application' }}">	
 
-    <title>{{ config('app.name', 'Functional Test') }}</title>
+    <title>{{ isset($title) ? $title : config('app.name', 'Functional Test') }}</title>	
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -38,14 +38,16 @@
             s.parentNode.insertBefore(t, s)
         }(window, document, 'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', "{{ env('FACEBOOK_PIXEL_ID') }}");
+        fbq('init', "{{ isset($fbPixelId) ? $fbPixelId : '' }}");
         fbq('track', 'PageView');
 
     </script>
     <noscript><img height="1" width="1" style="display:none"
-            src="https://www.facebook.com/tr?id={{ $testingGA }}&ev=PageView&noscript=1" /></noscript>
+            src="https://www.facebook.com/tr?id={{ isset($fbPixelId) ? $fbPixelId : '' }}&ev=PageView&noscript=1" /></noscript>
     <!-- End Facebook Pixel Code -->
 
+
+    <!-- Google Analytics -->
     <script>
         (function(i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
@@ -59,10 +61,11 @@
             m.parentNode.insertBefore(a, m)
         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-        ga('create', "{{ $testingGA }}", 'auto');
+        ga('create', "{{ isset($ga) ? $ga : '' }}", 'auto');
         ga('send', 'pageview');
 
     </script>
+    <!--End Google Analytics -->
 
     <!-- Scripts -->
     @routes
@@ -72,7 +75,6 @@
 <body class="font-sans antialiased">
     @inertia
 </body>
-
 
 
 </html>
